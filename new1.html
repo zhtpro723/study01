@@ -21,7 +21,7 @@
     .back{margin-bottom:12px;display:inline-block;padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer;font-size:14px}
     .browse-hint{text-align:center;color:#6b7280;font-size:16px;margin-top:12px;padding:8px 0;line-height:1.5}
     footer{text-align:center;padding:20px;font-size:13px;color:#6b7280}
-    .detail-layout{display:flex;flex-direction:column;gap:20px;background:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.05)}
+    .detail-layout{display:flex;flex-direction:column;gap:20px;background:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.05);padding-bottom: 80px; /* 为底部固定栏留出空间 */}
     @media(min-width:768px){.detail-layout{flex-direction:row;align-items:flex-start}}
     .detail-image{flex:1;max-width:100%;position:relative}
     .detail-image img{width:100%;height:auto;max-width:100%;border-radius:12px;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
@@ -40,7 +40,7 @@
     .quantity-selector button{padding:4px 10px;font-size:16px;border:1px solid #d1d5db;background:#fff;border-radius:6px;cursor:pointer;transition:all .2s}
     .quantity-selector button:hover{background:#f3f4f6}
     .quantity-selector input{width:40px;text-align:center;border:1px solid #d1d5db;border-radius:6px;height:32px}
-    .buy-section{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px;border-top:1px solid #e5e7eb;margin-top:16px}
+    .buy-section{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px;border-top:1px solid #e5e7eb;position: fixed; /* 固定在底部 */bottom: 0;left: 0;right: 0;background: white;z-index: 5;max-width: 960px;margin: 0 auto;box-shadow: 0 -2px 10px rgba(0,0,0,0.05);}
     .buy-section button{padding:10px 16px;border:none;border-radius:8px;background:#4f46e5;color:#fff;font-size:15px;cursor:pointer;flex:1;transition:all .2s}
     .buy-section button:hover{background:#4338ca}
     .price-display{font-size:18px;font-weight:700;color:#d32f2f}
@@ -102,8 +102,8 @@
       document.getElementById('listView').style.display='none';
       document.getElementById('detailView').classList.add('active');
       
-      // 进入详情页时触发100ms震动
-      vibrate(100);
+      // 进入详情页时触发125ms震动
+      vibrate(125);
 
       let thumbsHTML = product.images.map((img,i)=>`<img src="${img}" class="${i===0?'active':''}" onclick="showImage(${i})">`).join('');
 
@@ -130,21 +130,21 @@
                 </label>
               </div>
             </div>
-            
-            <!-- 整合到详情框内的购物车相关功能 -->
-            <div class="buy-section">
-              <div>
-                <div class="price-display" id="barPrice">¥${product.price}</div>
-                <div style="font-size:12px;color:#6b7280">包邮 | 限时优惠</div>
-              </div>
-              <div class="quantity-selector">
-                <button id="minusBtn">-</button>
-                <input type="text" id="quantityInput" value="1" readonly>
-                <button id="plusBtn">+</button>
-              </div>
-              <button id="addCartBtn">加入购物车</button>
-            </div>
           </div>
+        </div>
+        
+        <!-- 移到详情布局外，固定在底部的购物车相关功能 -->
+        <div class="buy-section">
+          <div>
+            <div class="price-display" id="barPrice">¥${product.price}</div>
+            <div style="font-size:12px;color:#6b7280">包邮 | 限时优惠</div>
+          </div>
+          <div class="quantity-selector">
+            <button id="minusBtn">-</button>
+            <input type="text" id="quantityInput" value="1" readonly>
+            <button id="plusBtn">+</button>
+          </div>
+          <button id="addCartBtn">加入购物车</button>
         </div>
       `;
 
@@ -155,7 +155,7 @@
       
       // 为详情页图片添加点击震动事件
       document.getElementById('mainImage').addEventListener('click', () => {
-        vibrate(100);
+        vibrate(125);
       });
     }
 
@@ -178,8 +178,8 @@
       const thumbs = document.querySelectorAll('.thumbs img');
       thumbs.forEach((img,i)=>img.classList.toggle('active',i===index));
       
-      // 切换图片时触发100ms震动
-      vibrate(100);
+      // 切换图片时触发125ms震动
+      vibrate(125);
     }
 
     document.getElementById('productCard').addEventListener('click', openDetail);
@@ -203,8 +203,8 @@
       document.getElementById('lightboxImage').src = product.images[index];
       document.getElementById('lightbox').style.display = 'flex';
       
-      // 打开大图时触发100ms震动
-      vibrate(100);
+      // 打开大图时触发125ms震动
+      vibrate(125);
     }
 
     // 关闭大图
@@ -219,8 +219,8 @@
       currentImageIndex = index;
       document.getElementById('lightboxImage').src = product.images[index];
       
-      // 滑动切换图片时触发100ms震动
-      vibrate(100);
+      // 滑动切换图片时触125ms震动
+      vibrate(125);
     }
 
     // 事件绑定
@@ -254,4 +254,3 @@
 
 </body>
 </html>
-    
